@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #090909;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  overflow-x: hidden;
+}
+
+/* Base custom styles to match Orbyte */
+.nb {
+  /* Class to override generic text styles if needed */
+}
+
+.radial-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #fff);
+  background: var(--initial-bg, transparent);
+  color: var(--text-color, #fff);
+  transition: all 0.3s ease;
+}
+
+.radial-button:hover {
+  background: var(--hover-bg, #fff);
+  color: var(--hover-text-color, #000);
+  border-color: var(--hover-border-color, #fff);
+}
+
+.button-content {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1rem;
 }

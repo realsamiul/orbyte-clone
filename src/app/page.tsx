@@ -1,65 +1,57 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="scroll-container pt-32">
+      {/* SECTION 1: HERO */}
+      <div className="animated-main min-h-[50vh] flex flex-col justify-center">
+        <main className="relative w-full px-5 md:px-10 py-4 md:py-9 text-white z-10">
+          <div className="flex flex-col overflow-hidden">
+            <h2 className="text-xs md:text-base mb-3 md:mb-7 font-bold tracking-widest uppercase">MAIN</h2>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl 2xl:text-5xl font-black leading-tight">
+              WE CREATE<br />DIGITAL EXPERIENCES.
+            </h1>
+          </div>
+        </main>
+      </div>
+
+      {/* SECTION 2: SCROLL TO EXPLORE */}
+      <div className="animated-step">
+        <section className="relative h-[80svh] w-full text-white z-10 flex items-end justify-center pb-20">
+          <div className="transform text-center flex flex-col items-center">
+            <div className="arrow mb-4 animate-bounce">
+              <img src="/icons/arrow.svg" alt="ArrowDown" className="w-6 h-6 invert" />
+            </div>
+            <p className="text-sm tracking-[0.2em] opacity-80 uppercase">SCROLL TO EXPLORE</p>
+          </div>
+        </section>
+      </div>
+
+      {/* SECTION 3: ABOUT */}
+      <div className="animated-about">
+        <section className="relative min-h-screen w-full px-5 md:px-10 py-20 text-white z-10 flex items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+            <div>
+              <h2 className="text-xs md:text-base mb-3 md:mb-7 font-bold tracking-widest uppercase">ABOUT US</h2>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl 2xl:text-5xl font-black leading-tight mb-10">
+                SOFTWARE DESIGN<br />& DEVELOPMENT STUDIO.
+              </h1>
+              <p className="text-sm opacity-60 uppercase tracking-widest">
+                Founded in<br />Buenos Aires, Argentina.
+              </p>
+            </div>
+            <div className="flex flex-col justify-center space-y-6 text-sm md:text-base opacity-80 max-w-lg">
+              <p>
+                ORBYTE is a software design and development studio focused on building high-impact digital products and scalable systems. We approach design as a dynamic system, which evolves alongside the product, the business, and its users.
+              </p>
+              <p>
+                We specialize in helping organizations grow with robust digital solutions tailored to current needs and with a long-term vision. Our focus is on creating user experiences that scale and perform over time.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* MORE SECTIONS TO BE ADDED (SERVICES, CONTACT, FOOTER) */}
+      <div className="h-[100vh]"></div>
     </div>
   );
 }
