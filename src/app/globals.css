@@ -3,6 +3,12 @@
 :root {
   --background: #090909;
   --foreground: #ffffff;
+  --border-color: #ffffff;
+  --initial-bg: transparent;
+  --text-color: #ffffff;
+  --hover-bg: #ffffff;
+  --hover-text-color: #000000;
+  --hover-border-color: #ffffff;
 }
 
 @theme inline {
@@ -13,36 +19,74 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: itc-avant-garde-gothic-pro, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Base custom styles to match Orbyte */
-.nb {
-  /* Class to override generic text styles if needed */
+.scroll-container {
+  /* Ensuring lenis works perfectly on the main wrapper */
 }
 
+/* Orbyte EXACT radial button CSS ported from minified */
 .radial-button {
-  position: relative;
-  display: flex;
-  align-items: center;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  height: 52px;
+  color: var(--text-color);
+  background-color: var(--initial-bg);
+  border-radius: 30px;
   justify-content: center;
-  border-radius: 9999px;
+  align-items: center;
+  padding-inline: 20px;
+  line-height: 52px;
+  transition: color .3s, background-color .3s, border-color .3s;
+  display: flex;
+  position: relative;
   overflow: hidden;
-  border: 1px solid var(--border-color, #fff);
-  background: var(--initial-bg, transparent);
-  color: var(--text-color, #fff);
-  transition: all 0.3s ease;
+}
+
+.radial-button:before {
+  content: "";
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  background: var(--hover-bg);
+  z-index: 0;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  transition: width .4s, height .4s;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.radial-button:hover:before {
+  width: 300px;
+  height: 300px;
 }
 
 .radial-button:hover {
-  background: var(--hover-bg, #fff);
-  color: var(--hover-text-color, #000);
-  border-color: var(--hover-border-color, #fff);
+  border-color: var(--hover-border-color);
 }
 
-.button-content {
-  position: relative;
+.radial-button:hover span {
+  color: var(--hover-text-color);
+}
+
+.radial-button span {
   z-index: 1;
-  padding: 0.5rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  transition: color .3s;
+  display: flex;
+  position: relative;
+}
+
+@media (max-width: 48rem) {
+  .radial-button {
+    height: 42px;
+  }
 }
