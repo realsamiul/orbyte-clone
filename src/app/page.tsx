@@ -16,7 +16,6 @@ export default function Home() {
       const revealContainers = gsap.utils.toArray<HTMLElement>(".reveal-container");
       
       revealContainers.forEach((container) => {
-        // Find all text elements inside the container that need to be revealed
         const textElements = container.querySelectorAll(".reveal-text");
         
         gsap.fromTo(
@@ -44,14 +43,16 @@ export default function Home() {
   return (
     <div ref={containerRef} className="scroll-container pt-32 pb-0">
       
+      {/* SECTION 1: HERO */}
+      {/* Handled by preloader intro sequence */}
       <div className="animated-main min-h-[60vh] flex flex-col justify-center">
         <main className="relative w-full px-5 md:px-10 py-4 md:py-9 text-white z-10">
-          <div className="flex flex-col reveal-container">
+          <div className="flex flex-col">
             <div className="overflow-hidden mb-3 md:mb-7">
-              <h2 className="text-xs md:text-base font-bold tracking-widest uppercase reveal-text">MAIN</h2>
+              <h2 className="text-xs md:text-base font-bold tracking-widest uppercase intro-reveal opacity-0">MAIN</h2>
             </div>
             <div className="overflow-hidden">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl font-black leading-tight reveal-text">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl font-black leading-tight intro-reveal opacity-0">
                 WE CREATE<br />DIGITAL EXPERIENCES.
               </h1>
             </div>

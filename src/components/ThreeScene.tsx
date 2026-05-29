@@ -1,26 +1,19 @@
 "use client";
 
-import React, { useRef, useMemo, useState, useEffect } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Sphere, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
-import { useLenis } from "@studio-freight/react-lenis";
+import { ScrollStore } from "./ScrollStore";
 
-// Orbyte specific parameters extracted from minified bundle
 const PLANET_BASE_RADIUS = 6;
 const PLANET_RADIUS_MULTIPLIER = 40;
 const PLANET_Y_MULTIPLIER = -34.6;
 
 function getCameraPathPosition(progress: number) {
-  // Eased progress matching: .5 * Math.pow(2 * A - 1, 3) + .5
+  // Orbyte specific eased progress formula matching their WebGL bundle
   const easedProgress = 0.5 * Math.pow(2 * progress - 1, 3) + 0.5;
   
-  // Orbyte path:
-  // t = 2 * Math.PI * e
-  // n = 6 + 40 * e
-  // x = Math.sin(t) * n
-  // y = -(34.6 * e)
-  // z = Math.cos(t) * n
   const t = 2 * Math.PI * easedProgress;
   const n = PLANET_BASE_RADIUS + PLANET_RADIUS_MULTIPLIER * easedProgress;
   
@@ -32,17 +25,9 @@ function getCameraPathPosition(progress: number) {
 }
 
 function SceneChoreography() {
-  const scrollTarget = useRef(0);
   const scrollCurrent = useRef(0);
   const mouse = useRef({ x: 0, y: 0 });
   const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
-  
-  useLenis((lenis) => {
-    const maxScroll = document.body.scrollHeight - window.innerHeight;
-    if (maxScroll > 0) {
-      scrollTarget.current = lenis.scroll / maxScroll;
-    }
-  });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -54,14 +39,13 @@ function SceneChoreography() {
   }, []);
 
   useFrame((state, delta) => {
-    // 1 - Math.exp(-4 * delta) gives a framerate-independent lerp factor (similar to Orbyte)
     const lerpFactor = 1 - Math.exp(-4 * delta);
     
-    scrollCurrent.current += (scrollTarget.current - scrollCurrent.current) * lerpFactor;
+    // Read from the globally bridged scroll store
+    scrollCurrent.current += (ScrollStore.progress - scrollCurrent.current) * lerpFactor;
     
     const camPos = getCameraPathPosition(scrollCurrent.current);
     
-    // Add mouse parallax
     const camDir = camPos.clone().normalize();
     const up = new THREE.Vector3(0, 1, 0);
     const right = up.clone().cross(camDir).normalize();
@@ -75,10 +59,7 @@ function SceneChoreography() {
     state.camera.position.lerp(finalCamPos, lerpFactor);
     state.camera.lookAt(0, 0, 0);
     
-    // FOV changes
     const targetFov = isMobile ? 54 : 42; 
-    // If hovering, they change FOV slightly (40 desktop, 52 mobile). Ignoring hover FOV for exactness unless needed.
-    
     // @ts-ignore
     state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, targetFov, 1 - Math.exp(-3 * delta));
     state.camera.updateProjectionMatrix();

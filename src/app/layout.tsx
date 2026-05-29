@@ -1,3 +1,4 @@
+import Preloader from "@/components/Preloader";
 import ThreeScene from "@/components/ThreeScene";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className="antialiased selection:bg-white selection:text-black">
         <ThreeScene />
           <SmoothScroll>
+          <Preloader />
           <Header />
           {children}
         </SmoothScroll>
