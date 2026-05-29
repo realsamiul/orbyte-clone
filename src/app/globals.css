@@ -2,7 +2,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090909;
+  /* Premium radial vignetted background gradient creating deep celestial lighting */
+  --background: radial-gradient(circle at center, #111111 0%, #060606 100%);
   --foreground: #ffffff;
   --border-color: #ffffff;
   --initial-bg: transparent;
@@ -22,7 +23,8 @@
 }
 
 body {
-  background-color: var(--background);
+  background: var(--background);
+  background-color: #060606;
   color: var(--foreground);
   font-family: "itc-avant-garde-gothic-pro", itc-avant-garde-gothic-pro, ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;

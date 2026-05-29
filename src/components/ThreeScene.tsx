@@ -14,8 +14,8 @@ const PLANET_Y_MULTIPLIER = -34.6;
 const FresnelGlowMaterial = shaderMaterial(
   {
     glowColor: new THREE.Color("#ffffff"),
-    glowPower: 2.2,
-    glowIntensity: 0.8,
+    glowPower: 2.2, // Softer, broader rim glow
+    glowIntensity: 0.9, // Higher luminance to stand out on rich dark backgrounds
   },
   // Vertex Shader: Compute normals and view vectors in view space
   `
@@ -77,7 +77,6 @@ function SceneChoreography() {
   }, []);
 
   useFrame((state, delta) => {
-    // Standard safety fallback for delta spikes (focus changes, etc.)
     const safeDelta = Math.min(delta, 0.1);
     const lerpFactor = 1 - Math.exp(-4 * safeDelta);
     
@@ -150,36 +149,59 @@ function OrbitalRing({
 
 function Planet() {
   const coreRef = useRef<THREE.Mesh>(null);
+  const dotsRef = useRef<THREE.Points>(null);
   const ringGroupRef = useRef<THREE.Group>(null);
   
   useFrame((state, delta) => {
     const safeDelta = Math.min(delta, 0.1);
     if (coreRef.current) {
-      coreRef.current.rotation.y += 0.08 * safeDelta;
+      coreRef.current.rotation.y += 0.04 * safeDelta;
+    }
+    if (dotsRef.current) {
+      dotsRef.current.rotation.y += 0.08 * safeDelta;
+      dotsRef.current.rotation.x += 0.02 * safeDelta;
     }
     if (ringGroupRef.current) {
-      ringGroupRef.current.rotation.y -= 0.04 * safeDelta;
+      ringGroupRef.current.rotation.y -= 0.03 * safeDelta;
     }
   });
 
+  // Create a SphereGeometry and use its vertices for the glowing dotted grid
+  const dottedGeometry = useMemo(() => {
+    // 32 x 32 segments provides an elegant density of dots without being overwhelming
+    return new THREE.SphereGeometry(1.295, 32, 32);
+  }, []);
+
   return (
     <group>
-      {/* A. Core Planet (Pure near-black, smooth matte finish) */}
-      <Sphere ref={coreRef} args={[1.3, 64, 64]}>
+      {/* A. Core Planet (Opacity Blocker: Blocks objects, particles, and rings behind the sphere) */}
+      <Sphere ref={coreRef} args={[1.28, 64, 64]}>
         <meshStandardMaterial
           color="#040404"
-          roughness={0.9}
-          metalness={0.8}
+          roughness={0.95}
+          metalness={0.9}
         />
       </Sphere>
 
-      {/* B. Atmospheric rim-lighting (Volumetric Halo) */}
-      <Sphere args={[1.33, 64, 64]}>
+      {/* B. Dotted grid globe wrapper (The premium glowing grid of Orbyte) */}
+      <points ref={dotsRef} geometry={dottedGeometry}>
+        <pointsMaterial
+          color="#ffffff"
+          size={0.015} // tiny glowing vertices
+          transparent={true}
+          opacity={0.35}
+          sizeAttenuation={true}
+          depthWrite={false}
+        />
+      </points>
+
+      {/* C. Atmospheric rim-lighting (Volumetric Halo) */}
+      <Sphere args={[1.32, 64, 64]}>
         {/* @ts-ignore */}
         <fresnelGlowMaterial
           glowColor={new THREE.Color("#ffffff")}
-          glowPower={3.0}
-          glowIntensity={0.6}
+          glowPower={2.0} // Shaper edge rim
+          glowIntensity={0.65}
           transparent={true}
           blending={THREE.AdditiveBlending}
           side={THREE.FrontSide}
@@ -187,29 +209,30 @@ function Planet() {
         />
       </Sphere>
 
-      {/* C. Interactive Orbital concentric ring systems */}
+      {/* D. Interactive Orbital concentric ring systems */}
       <group ref={ringGroupRef}>
         <OrbitalRing radius={1.7} rotationX={0.4} rotationY={0.2} opacity={0.2} />
         <OrbitalRing radius={2.2} rotationX={-0.3} rotationY={0.5} opacity={0.15} />
         <OrbitalRing radius={2.8} rotationX={0.2} rotationY={-0.4} opacity={0.1} />
+        <OrbitalRing radius={3.5} rotationX={0.5} rotationY={-0.1} opacity={0.06} />
       </group>
     </group>
   );
 }
 
 function Particles() {
-  const count = 650;
+  const count = 750;
   const meshRef = useRef<THREE.Points>(null);
 
   // Position particles in a flat orbital galactic disc/asteroid field around the planet
   const particlesPosition = useMemo(() => {
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const radius = Math.random() * 22 + 2.5; // orbital distance
+      const radius = Math.random() * 24 + 2.5; // orbital distance
       const angle = Math.random() * Math.PI * 2;
       positions[i * 3] = Math.cos(angle) * radius;
       // standard gaussian flat thickness disk on Y plane
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 1.8; 
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 1.5; 
       positions[i * 3 + 2] = Math.sin(angle) * radius;
     }
     return positions;
@@ -218,7 +241,7 @@ function Particles() {
   useFrame((state, delta) => {
     const safeDelta = Math.min(delta, 0.1);
     if (meshRef.current) {
-      meshRef.current.rotation.y += 0.02 * safeDelta;
+      meshRef.current.rotation.y += 0.015 * safeDelta;
     }
   });
 
@@ -234,10 +257,10 @@ function Particles() {
         />
       </bufferGeometry>
       <pointsMaterial 
-        size={0.045} 
+        size={0.04} 
         color="#ffffff" 
         transparent 
-        opacity={0.35} 
+        opacity={0.3} 
         sizeAttenuation={true} 
       />
     </points>
@@ -249,9 +272,9 @@ export default function ThreeScene() {
     <div className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 6], fov: 42 }}>
         <SceneChoreography />
-        <ambientLight intensity={0.15} />
-        <directionalLight position={[5, 10, 5]} intensity={2.2} color="#ffffff" />
-        <directionalLight position={[-5, -10, -5]} intensity={0.4} color="#ffffff" />
+        <ambientLight intensity={0.1} />
+        <directionalLight position={[5, 10, 5]} intensity={2.0} color="#ffffff" />
+        <directionalLight position={[-5, -10, -5]} intensity={0.3} color="#ffffff" />
         <Planet />
         <Particles />
       </Canvas>
