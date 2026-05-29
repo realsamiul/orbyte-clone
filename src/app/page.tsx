@@ -60,13 +60,13 @@ export default function Home() {
         
         gsap.fromTo(
           textElements,
-          { opacity: 0, y: 40 },
+          { opacity: 0, y: 50 },
           {
             opacity: 1,
             y: 0,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "power3.out",
+            duration: 1.4,
+            stagger: 0.12,
+            ease: "power4.out", // Upgrade to ultra-premium Fast-Out deceleration curve
             scrollTrigger: {
               trigger: container,
               start: "top 85%",
@@ -79,6 +79,15 @@ export default function Home() {
 
     return () => ctx.revert();
   }, []);
+
+  // Liquid Radial Button Hover Tracking: Calculates entry vector and translates the background expand bubble
+  const handleButtonMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--x", `${x}px`);
+    e.currentTarget.style.setProperty("--y", `${y}px`);
+  };
 
   return (
     <div ref={containerRef} className="scroll-container">
@@ -144,6 +153,7 @@ export default function Home() {
             {/* Editorial Circle Toggle Buttons */}
             <div className="hidden md:flex w-fit justify-start gap-4 mt-6 arrowRounded reveal-text">
               <button
+                onMouseMove={handleButtonMouseMove}
                 type="button"
                 className="radial-button uppercase"
                 style={{
@@ -167,6 +177,7 @@ export default function Home() {
                 </span>
               </button>
               <button
+                onMouseMove={handleButtonMouseMove}
                 type="button"
                 className="radial-button uppercase"
                 style={{
@@ -256,6 +267,7 @@ export default function Home() {
             <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
               <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -279,6 +291,7 @@ export default function Home() {
                   </span>
                 </button>
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -333,6 +346,7 @@ export default function Home() {
             <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
               <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -356,6 +370,7 @@ export default function Home() {
                   </span>
                 </button>
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -408,6 +423,7 @@ export default function Home() {
             <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
               <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -431,6 +447,7 @@ export default function Home() {
                   </span>
                 </button>
                 <button
+                  onMouseMove={handleButtonMouseMove}
                   type="button"
                   className="radial-button uppercase"
                   style={{
@@ -530,6 +547,7 @@ export default function Home() {
                 <textarea placeholder="Message" required className="inputData px-3 py-3 md:px-5 md:py-4 h-24 md:h-32 border border-black/20 rounded-2xl outline-none focus:border-black transition-colors resize-none reveal-text"></textarea>
                 <div className="flex items-center uppercase justify-between mt-2 reveal-text">
                   <button 
+                    onMouseMove={handleButtonMouseMove}
                     type="submit" 
                     className="radial-button uppercase font-bold text-sm px-8 py-3 cursor-pointer"
                     style={{

@@ -42,6 +42,15 @@ export default function Header() {
     }
   };
 
+  // Liquid Radial Button Hover Tracking: Calculates entry vector and translates the background expand bubble
+  const handleButtonMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--x", `${x}px`);
+    e.currentTarget.style.setProperty("--y", `${y}px`);
+  };
+
   return (
     <header className="fixed top-0 left-0 z-50 w-full h-8 md:h-13 my-5 gap-5 md:my-10 px-5 md:px-10 flex justify-between items-center transition-opacity duration-500 opacity-100 mix-blend-difference pointer-events-auto">
       {/* LEFT: Logo & EN selector & Sound controller */}
@@ -107,6 +116,7 @@ export default function Header() {
           <div className="h-8 md:h-13 text-xs md:text-base flex items-center">
             <button
               onClick={() => handleScrollToSection(".contact-section")}
+              onMouseMove={handleButtonMouseMove}
               type="button"
               className="radial-button uppercase cursor-pointer"
               style={{
