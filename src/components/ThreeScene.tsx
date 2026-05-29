@@ -1,14 +1,52 @@
 "use client";
 
 import React, { useRef, useMemo, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Sphere, MeshDistortMaterial } from "@react-three/drei";
+import { Canvas, useFrame, extend } from "@react-three/fiber";
+import { Sphere, shaderMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { ScrollStore } from "./ScrollStore";
 
 const PLANET_BASE_RADIUS = 6;
 const PLANET_RADIUS_MULTIPLIER = 40;
 const PLANET_Y_MULTIPLIER = -34.6;
+
+// 1. Fresnel Atmospheric Glow Shader Material
+const FresnelGlowMaterial = shaderMaterial(
+  {
+    glowColor: new THREE.Color("#ffffff"),
+    glowPower: 2.2,
+    glowIntensity: 0.8,
+  },
+  // Vertex Shader: Compute normals and view vectors in view space
+  `
+    varying vec3 vNormal;
+    varying vec3 vViewPosition;
+    void main() {
+      vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+      vNormal = normalize(normalMatrix * normal);
+      vViewPosition = -mvPosition.xyz;
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  `,
+  // Fragment Shader: Compute rim glow based on view vector / normal alignment
+  `
+    varying vec3 vNormal;
+    varying vec3 vViewPosition;
+    uniform vec3 glowColor;
+    uniform float glowPower;
+    uniform float glowIntensity;
+    void main() {
+      vec3 normal = normalize(vNormal);
+      vec3 viewDir = normalize(vViewPosition);
+      // Fresnel term: 1.0 at edges (perpendicular), 0.0 at center (aligned)
+      float intensity = pow(1.0 - max(dot(normal, viewDir), 0.0), glowPower);
+      gl_FragColor = vec4(glowColor, intensity * glowIntensity);
+    }
+  `
+);
+
+// Register custom shader material with react-three-fiber
+extend({ FresnelGlowMaterial });
 
 function getCameraPathPosition(progress: number) {
   // Orbyte specific eased progress formula matching their WebGL bundle
@@ -39,7 +77,9 @@ function SceneChoreography() {
   }, []);
 
   useFrame((state, delta) => {
-    const lerpFactor = 1 - Math.exp(-4 * delta);
+    // Standard safety fallback for delta spikes (focus changes, etc.)
+    const safeDelta = Math.min(delta, 0.1);
+    const lerpFactor = 1 - Math.exp(-4 * safeDelta);
     
     // Read from the globally bridged scroll store
     scrollCurrent.current += (ScrollStore.progress - scrollCurrent.current) * lerpFactor;
@@ -51,8 +91,8 @@ function SceneChoreography() {
     const right = up.clone().cross(camDir).normalize();
     const localUp = camDir.clone().cross(right).normalize();
     
-    const mouseOffsetX = right.clone().multiplyScalar(0.2 * mouse.current.x);
-    const mouseOffsetY = localUp.clone().multiplyScalar(0.2 * mouse.current.y);
+    const mouseOffsetX = right.clone().multiplyScalar(0.3 * mouse.current.x);
+    const mouseOffsetY = localUp.clone().multiplyScalar(0.3 * mouse.current.y);
     
     const finalCamPos = camPos.clone().add(mouseOffsetX).add(mouseOffsetY);
     
@@ -61,50 +101,126 @@ function SceneChoreography() {
     
     const targetFov = isMobile ? 54 : 42; 
     // @ts-ignore
-    state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, targetFov, 1 - Math.exp(-3 * delta));
+    state.camera.fov = THREE.MathUtils.lerp(state.camera.fov, targetFov, 1 - Math.exp(-3 * safeDelta));
     state.camera.updateProjectionMatrix();
   });
 
   return null;
 }
 
+interface OrbitalRingProps {
+  radius: number;
+  rotationX?: number;
+  rotationY?: number;
+  color?: string;
+  opacity?: number;
+}
+
+// concentric thin orbital ring paths matching the editorial aesthetics
+function OrbitalRing({
+  radius,
+  rotationX = 0,
+  rotationY = 0,
+  color = "#ffffff",
+  opacity = 0.15,
+}: OrbitalRingProps) {
+  const segments = 128;
+  const points = useMemo(() => {
+    const pts = [];
+    for (let i = 0; i <= segments; i++) {
+      const theta = (i / segments) * Math.PI * 2;
+      pts.push(new THREE.Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
+    }
+    return pts;
+  }, [radius]);
+
+  const geometry = useMemo(() => {
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }, [points]);
+
+  return (
+    <lineLoop 
+      geometry={geometry} 
+      rotation={[rotationX, rotationY, 0]}
+    >
+      <lineBasicMaterial color={color} transparent opacity={opacity} />
+    </lineLoop>
+  );
+}
+
 function Planet() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+  const ringGroupRef = useRef<THREE.Group>(null);
   
   useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.1 * delta;
+    const safeDelta = Math.min(delta, 0.1);
+    if (coreRef.current) {
+      coreRef.current.rotation.y += 0.08 * safeDelta;
+    }
+    if (ringGroupRef.current) {
+      ringGroupRef.current.rotation.y -= 0.04 * safeDelta;
     }
   });
 
   return (
-    <Sphere ref={meshRef} args={[1.3, 64, 64]}>
-      <MeshDistortMaterial
-        color="#111111"
-        attach="material"
-        distort={0.2}
-        speed={1.5}
-        roughness={0.7}
-        metalness={0.8}
-        wireframe={false}
-      />
-    </Sphere>
+    <group>
+      {/* A. Core Planet (Pure near-black, smooth matte finish) */}
+      <Sphere ref={coreRef} args={[1.3, 64, 64]}>
+        <meshStandardMaterial
+          color="#040404"
+          roughness={0.9}
+          metalness={0.8}
+        />
+      </Sphere>
+
+      {/* B. Atmospheric rim-lighting (Volumetric Halo) */}
+      <Sphere args={[1.33, 64, 64]}>
+        {/* @ts-ignore */}
+        <fresnelGlowMaterial
+          glowColor={new THREE.Color("#ffffff")}
+          glowPower={3.0}
+          glowIntensity={0.6}
+          transparent={true}
+          blending={THREE.AdditiveBlending}
+          side={THREE.FrontSide}
+          depthWrite={false}
+        />
+      </Sphere>
+
+      {/* C. Interactive Orbital concentric ring systems */}
+      <group ref={ringGroupRef}>
+        <OrbitalRing radius={1.7} rotationX={0.4} rotationY={0.2} opacity={0.2} />
+        <OrbitalRing radius={2.2} rotationX={-0.3} rotationY={0.5} opacity={0.15} />
+        <OrbitalRing radius={2.8} rotationX={0.2} rotationY={-0.4} opacity={0.1} />
+      </group>
+    </group>
   );
 }
 
 function Particles() {
-  const count = 500;
+  const count = 650;
   const meshRef = useRef<THREE.Points>(null);
 
+  // Position particles in a flat orbital galactic disc/asteroid field around the planet
   const particlesPosition = useMemo(() => {
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 100;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+      const radius = Math.random() * 22 + 2.5; // orbital distance
+      const angle = Math.random() * Math.PI * 2;
+      positions[i * 3] = Math.cos(angle) * radius;
+      // standard gaussian flat thickness disk on Y plane
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 1.8; 
+      positions[i * 3 + 2] = Math.sin(angle) * radius;
     }
     return positions;
   }, [count]);
+
+  useFrame((state, delta) => {
+    const safeDelta = Math.min(delta, 0.1);
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.02 * safeDelta;
+    }
+  });
 
   return (
     <points ref={meshRef}>
@@ -117,7 +233,13 @@ function Particles() {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial size={0.05} color="#ffffff" transparent opacity={0.4} sizeAttenuation={true} />
+      <pointsMaterial 
+        size={0.045} 
+        color="#ffffff" 
+        transparent 
+        opacity={0.35} 
+        sizeAttenuation={true} 
+      />
     </points>
   );
 }
@@ -127,13 +249,12 @@ export default function ThreeScene() {
     <div className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 6], fov: 42 }}>
         <SceneChoreography />
-        <ambientLight intensity={0.2} />
-        <directionalLight position={[5, 5, 5]} intensity={2} />
-        <directionalLight position={[-5, -5, -5]} intensity={0.5} />
+        <ambientLight intensity={0.15} />
+        <directionalLight position={[5, 10, 5]} intensity={2.2} color="#ffffff" />
+        <directionalLight position={[-5, -10, -5]} intensity={0.4} color="#ffffff" />
         <Planet />
         <Particles />
       </Canvas>
     </div>
   );
 }
-

@@ -1,3 +1,4 @@
+@import "https://use.typekit.net/fdb0pds.css";
 @import "tailwindcss";
 
 :root {
@@ -16,17 +17,131 @@
   --color-foreground: var(--foreground);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: itc-avant-garde-gothic-pro, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "itc-avant-garde-gothic-pro", itc-avant-garde-gothic-pro, ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Cursor */
+.custom-cursor {
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: difference;
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+.custom-cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99998;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+
+/* Custom Cursor Active / Hover states */
+.cursor-hover .custom-cursor {
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+}
+
+.cursor-hover .custom-cursor-ring {
+  width: 60px;
+  height: 60px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Layout section containers matching orbyte.studio scroll structure */
 .scroll-container {
-  /* Ensuring lenis works perfectly on the main wrapper */
+  position: relative;
+  width: 100%;
+}
+
+.animated-main,
+.animated-step,
+.animated-text {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.animated-main {
+  justify-content: center;
+}
+
+/* Fluid display text layout tracking and weights */
+h1 {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 800; /* ITC Avant Garde Pro Bold/Demi */
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+p {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+/* Custom helpers for responsiveness */
+@media (max-height: 40rem) {
+  .hide-when-short {
+    display: none !important;
+  }
+}
+
+/* Input elements for contact form */
+.inputData {
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 500;
+  color: #000000;
+  transition: border-bottom-color 0.3s;
+}
+
+.inputData:focus {
+  border-bottom-color: #000000;
 }
 
 /* Orbyte EXACT radial button CSS ported from minified */
@@ -45,6 +160,10 @@ body {
   display: flex;
   position: relative;
   overflow: hidden;
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
 }
 
 .radial-button:before {
@@ -88,5 +207,26 @@ body {
 @media (max-width: 48rem) {
   .radial-button {
     height: 42px;
+    font-size: 0.75rem;
   }
+}
+
+/* Circle Rounded Button wrapper */
+.arrowRounded {
+  pointer-events: auto;
+}
+
+.arrowRounded button {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerText {
+  font-size: clamp(1.5rem, 5vw, 4rem);
+  line-height: 1.1;
+  font-weight: 800;
+  max-width: 80%;
+  margin: 0 auto;
 }
