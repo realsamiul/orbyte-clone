@@ -2,12 +2,11 @@ import Preloader from "@/components/Preloader";
 import ThreeScene from "@/components/ThreeScene";
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
 import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
-  title: "ORBYTE - Software Design & Development Studio",
-  description: "ORBYTE is an independent software design and development studio focused on building scalable digital systems and high-impact web platforms.",
+  title: "StitchMark - AI-Powered Flood Detection & Geospatial Intelligence",
+  description: "StitchMark delivers near-real-time, pixel-level flood detection for disaster response using foundation models and evidential deep learning.",
 };
 
 export default function RootLayout({
@@ -21,7 +20,6 @@ export default function RootLayout({
         <ThreeScene />
           <SmoothScroll>
           <Preloader />
-          <Header />
           {children}
         </SmoothScroll>
       </body>

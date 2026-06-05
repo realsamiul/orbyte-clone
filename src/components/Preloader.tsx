@@ -45,7 +45,10 @@ export default function Preloader() {
     <div className="preloader-overlay fixed top-0 left-0 w-[100vw] h-[100svh] bg-[#090909] text-white flex justify-center items-center z-[9999] tracking-[0.1em] opacity-100">
       <div className="grid place-items-center grid-rows-[1fr_auto_1fr] h-[56svh] w-[56svh] relative z-10 text-center">
         <div className="text-[0.75rem] opacity-50 leading-[1.2]">{progress}</div>
-        <img src="/logo/logo.svg" alt="Logo" className="h-[52px]" />
+        <div className="flex flex-col items-center gap-4">
+          <img src="/logo/logo.svg" alt="Logo" className="h-[52px]" />
+          <h1 className="text-sm md:text-base font-bold tracking-widest uppercase">STITCHMARK</h1>
+        </div>
         <div className="text-[0.75rem] opacity-50 leading-[1.2]">{progress}</div>
       </div>
     </div>

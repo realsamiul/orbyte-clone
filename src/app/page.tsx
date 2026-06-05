@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import Link from "next/link";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -50,7 +49,7 @@ export default function Home() {
     };
   }, []);
 
-  // GSAP scroll trigger choreography with robust lifecycle cleanups
+  // GSAP scroll trigger choreography
   useEffect(() => {
     const ctx = gsap.context(() => {
       const revealContainers = gsap.utils.toArray<HTMLElement>(".reveal-container");
@@ -66,7 +65,7 @@ export default function Home() {
             y: 0,
             duration: 1.4,
             stagger: 0.12,
-            ease: "power4.out", // Upgrade to ultra-premium Fast-Out deceleration curve
+            ease: "power4.out",
             scrollTrigger: {
               trigger: container,
               start: "top 85%",
@@ -80,7 +79,6 @@ export default function Home() {
     return () => ctx.revert();
   }, []);
 
-  // Liquid Radial Button Hover Tracking: Calculates entry vector and translates the background expand bubble
   const handleButtonMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -121,10 +119,11 @@ export default function Home() {
       <div className="animated-main">
         <main className="relative w-full px-5 md:px-10 py-4 md:py-9 text-white z-10">
           <div className="flex flex-col overflow-hidden">
-            <h2 className="text-xs md:text-base font-bold tracking-widest uppercase intro-reveal opacity-0 mb-3 md:mb-7">MAIN</h2>
+            <h2 className="text-xs md:text-base font-bold tracking-widest uppercase intro-reveal opacity-0 mb-3 md:mb-7">AI-POWERED DISASTER RESPONSE</h2>
             <h1 className="text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl font-black leading-none intro-reveal opacity-0">
-              WE CREATE<br />DIGITAL EXPERIENCES.
+              STITCHMARK
             </h1>
+            <p className="text-sm md:text-base mt-4 md:mt-6 max-w-2xl intro-reveal opacity-0 font-medium">Real-time flood detection powered by geospatial AI</p>
           </div>
         </main>
       </div>
@@ -141,111 +140,37 @@ export default function Home() {
         </section>
       </div>
 
-      {/* SECTION 3: ABOUT US */}
+      {/* SECTION 3: THE PROBLEM */}
       <div className="animated-text about">
         <section className="relative h-[100svh] w-full text-white z-10 reveal-container">
           <div className="absolute top-18 md:top-33 left-5 right-5 md:left-10 md:right-10">
-            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">ABOUT US</h3>
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">THE CHALLENGE</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
-              SOFTWARE DESIGN<br />&amp; DEVELOPMENT STUDIO.
+              FLOODS DEMAND<br />INSTANT INTELLIGENCE.
             </h2>
             
-            {/* Editorial Circle Toggle Buttons */}
-            <div className="hidden md:flex w-fit justify-start gap-4 mt-6 arrowRounded reveal-text">
-              <button
-                onMouseMove={handleButtonMouseMove}
-                type="button"
-                className="radial-button uppercase"
-                style={{
-                  width: "52px",
-                  "--initial-bg": "transparent",
-                  "--text-color": "#fff",
-                  "--hover-bg": "#fff",
-                  "--hover-text-color": "#000",
-                  "--border-color": "#fff",
-                  "--hover-border-color": "#fff",
-                  "--button-width": "0px",
-                  "--button-height": "0px",
-                } as React.CSSProperties}
-              >
-                <span className="button-content">
-                  <span className="button-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M752.145 0c8.685 0 17.572 3.434 24.237 10.099 13.33 13.33 13.33 35.143 0 48.473L320.126 515.03l449.591 449.591c13.33 13.33 13.33 35.144 0 48.474-13.33 13.33-35.142 13.33-48.472 0L247.418 539.268c-13.33-13.33-13.33-35.144 0-48.474L727.91 10.1C734.575 3.435 743.46.002 752.146.002z"></path>
-                    </svg>
-                  </span>
-                </span>
-              </button>
-              <button
-                onMouseMove={handleButtonMouseMove}
-                type="button"
-                className="radial-button uppercase"
-                style={{
-                  width: "52px",
-                  "--initial-bg": "transparent",
-                  "--text-color": "#fff",
-                  "--hover-bg": "#fff",
-                  "--hover-text-color": "#000",
-                  "--border-color": "#fff",
-                  "--hover-border-color": "#fff",
-                  "--button-width": "0px",
-                  "--button-height": "0px",
-                } as React.CSSProperties}
-              >
-                <span className="button-content">
-                  <span className="button-icon">
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163 254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475 13.33-13.33 35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"></path>
-                    </svg>
-                  </span>
-                </span>
-              </button>
-            </div>
           </div>
 
           <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto pr-5 md:pr-10 w-auto md:w-1/2 text-white text-xs md:text-sm 2xl:text-base leading-relaxed reveal-text font-medium">
-            ORBYTE is a software design and development studio focused on
-            building high-impact digital products and scalable systems. We
-            approach design as a dynamic system, which evolves alongside the
-            product, the business, and its users.<br /><br />We specialize in
-            helping organizations grow with robust digital solutions tailored to
-            current needs and with a long-term vision. Our focus is on creating
-            user experiences that scale and perform over time.
+            Bangladesh suffers catastrophic monsoon floods annually—displacing millions, destroying crops, and causing billions in damages. Existing systems rely on manual satellite interpretation, cloud-prone optical imagery, or delayed outputs. None provide near-real-time, pixel-level flood maps with quantified certainty.<br /><br />
+            <strong>StitchMark changes this.</strong> An end-to-end automated pipeline delivering actionable flood intelligence within minutes of satellite overpass.
           </div>
 
           <div className="absolute bottom-9 left-10 w-1/3 hidden md:block text-white reveal-text">
-            <p className="text-base font-bold">Founded in<br />Buenos Aires, Argentina.</p>
-          </div>
-
-          <div className="absolute top-33 right-10 w-1/3 hidden md:block text-white text-right reveal-text">
-            <p className="text-base font-bold">
-              <a
-                href="https://www.awwwards.com/sites/orbyte-studio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-70 transition-opacity"
-              >
-                Honorable Mention<br />AWWWARDS.
-              </a>
-            </p>
+            <p className="text-base font-bold">Powered by AI<br />Made for Good.</p>
           </div>
         </section>
       </div>
 
-      {/* SECTION 4: CLICK TO VIEW PORTFOLIO */}
-      <div className="animated-step awwwards">
+      {/* SECTION 4: SCROLL TRANSITION */}
+      <div className="animated-step">
         <section className="relative h-[100svh] w-full text-white z-10">
           <div className="absolute bottom-[56%] md:bottom-[60%] left-1/2 -translate-x-1/2 transform text-center flex flex-col items-center">
             <p className="text-xs md:text-sm tracking-[0.2em] font-bold opacity-80 block md:hidden xl:block hide-when-short mb-4">
-              CLICK TO VIEW PORTFOLIO
+              SCROLL FOR TECHNICAL DEEP DIVE
             </p>
             <div className="arrow">
               <Image src="/icons/arrow.svg" alt="ArrowDown" width={32} height={32} className="invert" />
-            </div>
-          </div>
-          <div className="absolute top-[56%] md:top-[60%] left-1/2 transform -translate-x-1/2 text-center flex flex-col items-center">
-            <div className="arrow rotate-180">
-              <Image src="/icons/arrow.svg" alt="ArrowUp" width={32} height={32} className="invert" />
             </div>
           </div>
         </section>
@@ -253,267 +178,149 @@ export default function Home() {
 
       <div className="services-start" />
 
-      {/* SECTION 5: SERVICES 1 - HIGH-IMPACT UX */}
-      <div className="animated-text">
-        <section className="relative h-[100svh] w-full text-white z-10 reveal-container">
+      {/* SECTION 5: ARCHITECTURE */}
+      <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
+        <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
           <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
-            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">SERVICES</h3>
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">ARCHITECTURE</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
-              HIGH-IMPACT<br />USER EXPERIENCES.
+              END-TO-END<br />AUTOMATED PIPELINE.
             </h2>
           </div>
 
           <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-white text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
-            <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
-              <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M752.145 0c8.685 0 17.572 3.434 24.237 10.099 13.33 13.33 13.33 35.143 0 48.473L320.126 515.03l449.591 449.591c13.33 13.33 13.33 35.144 0 48.474-13.33 13.33-35.142 13.33-48.472 0L247.418 539.268c-13.33-13.33-13.33-35.144 0-48.474L727.91 10.1C734.575 3.435 743.46.002 752.146.002z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163 254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475 13.33-13.33 35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-              </div>
-              
-              {/* Hashtag elements */}
-              <div className="flex max-h-6 overflow-hidden flex-wrap gap-2 md:gap-4 mb-1 opacity-50 uppercase text-xs md:text-sm font-bold tracking-widest">
-                <span>#SaaS</span><span>#Web</span><span>#App</span><span>#UI/UX</span>
-              </div>
-            </div>
-            
             <p>
-              We design conversion-driven interfaces that seamlessly
-              evolve with your brand. By blending visual storytelling with
-              intuitive usability, we transform digital touchpoints into
-              engaging journeys that capture and retain user attention.
+              <strong>Ingests:</strong> Sentinel‑1 SAR + Sentinel‑2 optical via Google Earth Engine<br/>
+              <strong>Segments:</strong> Floods at ≤10m resolution using fine-tuned Prithvi‑100M<br/>
+              <strong>Quantifies:</strong> Prediction confidence via Evidential Deep Learning<br/>
+              <strong>Delivers:</strong> Interactive maps to responders within minutes
             </p>
           </div>
         </section>
       </div>
 
-      {/* SECTION 6: SERVICES 2 - IMMERSIVE 3D */}
-      <div className="animated-text">
-        <section className="relative h-[100svh] w-full text-white z-10 reveal-container">
+      {/* SECTION 6: FOUNDATION MODELS */}
+      <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
+        <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
           <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
-            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">SERVICES</h3>
-            <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
-              IMMERSIVE<br />3D ENVIRONMENTS.
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">CORE TECHNOLOGY</h3>
+            <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
+              GEOSPATIAL<br />FOUNDATION MODELS.
             </h2>
           </div>
 
-          <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-white text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
-            <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
-              <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M752.145 0c8.685 0 17.572 3.434 24.237 10.099 13.33 13.33 13.33 35.143 0 48.473L320.126 515.03l449.591 449.591c13.33 13.33 13.33 35.144 0 48.474-13.33 13.33-35.142 13.33-48.472 0L247.418 539.268c-13.33-13.33-13.33-35.144 0-48.474L727.91 10.1C734.575 3.435 743.46.002 752.146.002z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163 254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475 13.33-13.33 35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-              </div>
-              
-              <div className="flex max-h-6 overflow-hidden flex-wrap gap-2 md:gap-4 mb-1 opacity-50 uppercase text-xs md:text-sm font-bold tracking-widest">
-                <span>#Realtime</span><span>#WebGL</span><span>#Render</span>
-              </div>
-            </div>
-            
+          <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-[#090909] text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
             <p>
-              We create highly detailed three-dimensional visuals. We
-              use 3D as an expressive tool that can enhance an interface, tell a
-              story, or transform an idea into an immersive visual environment.
+              Fine-tuned <strong>Prithvi‑100M</strong> (NASA/IBM) pre-trained on global satellite data. Ingests Sentinel‑2 RGB, NIR, SWIR alongside SAR VV/VH ratios and topographic features. 10× less labeled data needed versus custom CNNs. Already proven on geospatial change detection tasks.
             </p>
           </div>
         </section>
       </div>
 
-      {/* SECTION 7: SERVICES 3 - INTELLIGENT SOFTWARE */}
-      <div className="animated-text">
-        <section className="relative h-[100svh] w-full text-white z-10 reveal-container">
+      {/* SECTION 7: UNCERTAINTY QUANTIFICATION */}
+      <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
+        <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
           <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
-            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">SERVICES</h3>
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">CONFIDENCE SCORES</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
-              INTELLIGENT<br />SOFTWARE SOLUTIONS.
+              EVIDENTIAL<br />DEEP LEARNING.
             </h2>
           </div>
 
           <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-white text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
-            <div className="flex gap-2 md:gap-4 items-end justify-between mb-4">
-              <div className="flex w-23 md:w-30 justify-start gap-2 md:gap-4 arrowRounded">
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M752.145 0c8.685 0 17.572 3.434 24.237 10.099 13.33 13.33 13.33 35.143 0 48.473L320.126 515.03l449.591 449.591c13.33 13.33 13.33 35.144 0 48.474-13.33 13.33-35.142 13.33-48.472 0L247.418 539.268c-13.33-13.33-13.33-35.144 0-48.474L727.91 10.1C734.575 3.435 743.46.002 752.146.002z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-                <button
-                  onMouseMove={handleButtonMouseMove}
-                  type="button"
-                  className="radial-button uppercase"
-                  style={{
-                    width: "100%",
-                    "--initial-bg": "transparent",
-                    "--text-color": "#fff",
-                    "--hover-bg": "#fff",
-                    "--hover-text-color": "#000",
-                    "--border-color": "#fff",
-                    "--hover-border-color": "#fff",
-                    "--button-width": "0px",
-                    "--button-height": "0px",
-                  } as React.CSSProperties}
-                >
-                  <span className="button-content">
-                    <span className="button-icon">
-                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163 254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475 13.33-13.33 35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"></path>
-                      </svg>
-                    </span>
-                  </span>
-                </button>
-              </div>
-              
-              <div className="flex max-h-6 overflow-hidden flex-wrap gap-2 md:gap-4 mb-1 opacity-50 uppercase text-xs md:text-sm font-bold tracking-widest">
-                <span>#CRM</span><span>#API</span><span>#Data</span><span>#AI</span>
-              </div>
-            </div>
-            
             <p>
-              We engineer robust digital architectures, from custom
-              internal systems to automated workflows. Every solution is built
-              with a focus on logic, security, and long-term scalability to
-              ensure your technology supports your business growth.
+              Standard softmax produces overconfident predictions in ambiguous regions (urban water vs. shadow). We deploy a <strong>Dirichlet distribution head</strong> that jointly predicts flood probability and calibrated uncertainty—both aleatoric (data noise) and epistemic (model ignorance).<br/><br/>
+              <strong>Result: ECE &lt; 0.03</strong> calibration certified against expert annotators.
             </p>
           </div>
         </section>
       </div>
 
-      {/* SECTION 8: EDITORIAL PHRASE */}
+      {/* SECTION 8: ALL-WEATHER SENSING */}
+      <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
+        <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
+          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">CRITICAL ADVANTAGE</h3>
+            <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
+              ALL-WEATHER<br />SENSING.
+            </h2>
+          </div>
+
+          <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-[#090909] text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
+            <p>
+              <strong>Sentinel‑1 SAR</strong> operates through cloud cover. Optical systems fail when clouds obscure the scene—precisely when floods are most dangerous. StitchMark eliminates this single point of failure. Near-real-time, all-weather intelligence for life-critical decisions.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      {/* SECTION 9: VALIDATED RESULTS */}
+      <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
+        <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
+          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">PROVEN PERFORMANCE</h3>
+            <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
+              BENCHMARK<br />RESULTS.
+            </h2>
+          </div>
+
+          <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-white text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
+            <div className="space-y-3">
+              <p><strong>Baseline U-Net (thresholding):</strong> Dice 0.781</p>
+              <p><strong>Prithvi‑100M fine-tuned:</strong> Dice 0.830</p>
+              <p><strong>Target (full pipeline):</strong> &gt; Dice 0.85</p>
+              <p className="pt-4 text-xs opacity-75">Uncertainty maps correctly flag challenging regions where annotator agreement is also lower—validating epistemic uncertainty is meaningful, not decorative.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* SECTION 10: COST & SUSTAINABILITY */}
+      <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
+        <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
+          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+            <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">EFFICIENCY</h3>
+            <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
+              LEAN INFRASTRUCTURE.<br />INFINITE IMPACT.
+            </h2>
+          </div>
+
+          <div className="absolute bottom-5 md:bottom-9 left-5 right-5 md:left-auto md:right-10 w-auto md:w-1/3 text-[#090909] text-xs md:text-sm 2xl:text-base reveal-text font-medium leading-relaxed">
+            <p>
+              <strong>4-month pilot:</strong> $1,628 (fully funded by Google Cloud credits)<br/>
+              <strong>Ongoing operation:</strong> &lt;$500/month—fundable via humanitarian grants<br/>
+              <strong>Zero lock-in:</strong> Apache 2.0 open-source, ready for handover to government agencies
+            </p>
+          </div>
+        </section>
+      </div>
+
+      {/* SECTION 11: EDITORIAL STATEMENT */}
       <div className="animated-text">
         <section className="h-[100svh] w-full flex items-center justify-center text-white z-10 reveal-container">
           <div className="px-5 md:px-10 text-center">
             <h2 className="footerText reveal-text leading-tight">
-              A DYNAMIC ENTITY, CREATED TO ADAPT, RESONATE, AND STAND OVER TIME WITH INTEGRITY.
+              WHERE CUTTING-EDGE AI MEETS HUMANITARIAN IMPERATIVE. DELIVERING LIFE-SAVING INTELLIGENCE WITHIN MINUTES.
             </h2>
           </div>
         </section>
       </div>
 
-      {/* SECTION 9: SOCIAL FOOTER LINKS */}
+      {/* SECTION 12: SOCIAL FOOTER LINKS */}
       <div className="animated-main">
         <section className="text-xs md:text-base relative block md:flex justify-between items-center px-5 md:px-10 h-auto md:h-10 my-5 md:my-5 w-full z-10 gap-5 overflow-hidden reveal-container">
           <div className="flex gap-5 justify-center uppercase reveal-text font-bold">
-            <a className="opacity-100 hover:opacity-50 duration-200" href="mailto:info@orbyte.studio">INFO@ORBYTE.STUDIO</a>
-            <a className="opacity-100 hover:opacity-50 duration-200" href="https://www.instagram.com/orbyte.studio/" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-            <a className="opacity-100 hover:opacity-50 duration-200" href="https://www.linkedin.com/company/orbyte-studio/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+            <a className="opacity-100 hover:opacity-50 duration-200" href="mailto:info@stitchmark.ai">INFO@STITCHMARK.AI</a>
+            <a className="opacity-100 hover:opacity-50 duration-200" href="https://github.com/stitchmark" target="_blank" rel="noopener noreferrer">GITHUB</a>
+            <a className="opacity-100 hover:opacity-50 duration-200" href="https://linkedin.com/company/stitchmark" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
           </div>
           <div className="flex gap-5 mt-4 md:mt-0 justify-center text-center md:text-right reveal-text font-bold">
-            <Link className="opacity-100 hover:opacity-50 duration-200 truncate" href="/privacy">PRIVACY POLICY</Link>
-            <p className="truncate">ORBYTE STUDIO. ALL RIGHTS RESERVED.</p>
+            <p className="truncate">STITCHMARK. OPEN SOURCE. DESIGNED FOR HANDOVER.</p>
           </div>
         </section>
       </div>
 
-      {/* SECTION 10: WHITE OVERLAPPING CONTACT FORM */}
+      {/* SECTION 13: WHITE CONTACT SECTION */}
       <div className="animated-form contact-section">
         <footer className="relative w-full z-10 pointer-events-auto bg-white rounded-t-3xl md:rounded-t-[3rem] text-[#090909] pb-10">
           <div className="h-full pb-5 pt-10 px-5 md:px-10 md:pb-10 md:pt-14 overflow-hidden reveal-container">
@@ -521,18 +328,15 @@ export default function Home() {
             <div className="block md:flex items-center gap-10">
               <div className="flex flex-col w-full md:w-1/2">
                 <div className="overflow-hidden mb-3 md:mb-7">
-                  <h3 className="text-xs md:text-base font-bold tracking-widest uppercase reveal-text text-black">CONTACT</h3>
+                  <h3 className="text-xs md:text-base font-bold tracking-widest uppercase reveal-text text-black">INTERESTED?</h3>
                 </div>
                 <div className="overflow-hidden">
-                  <h2 className="text-3xl md:text-4xl xl:text-5xl font-black uppercase reveal-text text-black leading-tight">SEND US YOUR QUERY.</h2>
+                  <h2 className="text-3xl md:text-4xl xl:text-5xl font-black uppercase reveal-text text-black leading-tight">GET INVOLVED.</h2>
                 </div>
               </div>
               <div className="flex flex-col mt-5 md:mt-0 w-full md:w-1/2 text-xs md:text-sm xl:text-base leading-relaxed font-medium text-black">
                 <div className="overflow-hidden">
-                  <p className="reveal-text">If you are looking for a team to support you in the development of your project, don’t hesitate to contact us.</p>
-                </div>
-                <div className="overflow-hidden hidden md:flex mt-4">
-                  <p className="reveal-text font-bold">We are available to carry out your project.</p>
+                  <p className="reveal-text">StitchMark is open-source and designed for handover to disaster management agencies. Government partners, researchers, and humanitarian organizations can contribute or deploy today.</p>
                 </div>
               </div>
             </div>
@@ -541,7 +345,7 @@ export default function Home() {
               <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 gap-4 md:gap-5 overflow-hidden">
                 <input type="text" placeholder="Full Name" required className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
                 <input type="email" placeholder="Email Address" required className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
-                <input type="text" placeholder="Company Name" className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
+                <input type="text" placeholder="Organization" className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
               </div>
               <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 pt-6 md:pt-0 gap-5 overflow-hidden">
                 <textarea placeholder="Message" required className="inputData px-3 py-3 md:px-5 md:py-4 h-24 md:h-32 border border-black/20 rounded-2xl outline-none focus:border-black transition-colors resize-none reveal-text"></textarea>
@@ -559,7 +363,7 @@ export default function Home() {
                       "--hover-border-color": "#000",
                     } as React.CSSProperties}
                   >
-                    <span>SUBMIT</span>
+                    <span>SEND</span>
                   </button>
                   <button 
                     type="button" 
@@ -571,6 +375,11 @@ export default function Home() {
                 </div>
               </div>
             </form>
+
+            <div className="mt-8 md:mt-12 pt-8 border-t border-black/10 text-center">
+              <p className="text-xs md:text-sm text-black/70 mb-2">Have questions? Reach out directly:</p>
+              <a href="mailto:sam@stitchmark.space" className="text-sm md:text-base font-semibold text-black hover:opacity-60 transition-opacity">sam@stitchmark.space</a>
+            </div>
 
           </div>
         </footer>
