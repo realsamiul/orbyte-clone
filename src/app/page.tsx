@@ -118,7 +118,7 @@ export default function Home() {
       {/* SECTION 1: HERO */}
       <div className="animated-main">
         <main className="relative w-full px-5 md:px-10 py-4 md:py-9 text-white z-10">
-          <div className="flex flex-col overflow-hidden">
+          <div className="flex flex-col  ">
             <h2 className="text-xs md:text-base font-bold tracking-widest uppercase intro-reveal opacity-0 mb-3 md:mb-7">AI-POWERED DISASTER RESPONSE</h2>
             <h1 className="text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl font-black leading-none intro-reveal opacity-0">
               STITCHMARK
@@ -181,7 +181,7 @@ export default function Home() {
       {/* SECTION 5: ARCHITECTURE */}
       <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
         <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">ARCHITECTURE</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
               END-TO-END<br />AUTOMATED PIPELINE.
@@ -202,7 +202,7 @@ export default function Home() {
       {/* SECTION 6: FOUNDATION MODELS */}
       <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
         <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">CORE TECHNOLOGY</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
               GEOSPATIAL<br />FOUNDATION MODELS.
@@ -220,7 +220,7 @@ export default function Home() {
       {/* SECTION 7: UNCERTAINTY QUANTIFICATION */}
       <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
         <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">CONFIDENCE SCORES</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
               EVIDENTIAL<br />DEEP LEARNING.
@@ -239,7 +239,7 @@ export default function Home() {
       {/* SECTION 8: ALL-WEATHER SENSING */}
       <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
         <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">CRITICAL ADVANTAGE</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
               ALL-WEATHER<br />SENSING.
@@ -257,7 +257,7 @@ export default function Home() {
       {/* SECTION 9: VALIDATED RESULTS */}
       <div className="animated-text" style={{ backgroundColor: "#0a0a0a" }}>
         <section className="relative h-[100svh] w-full text-white z-10 reveal-container bg-[#0a0a0a]">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold">PROVEN PERFORMANCE</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight">
               BENCHMARK<br />RESULTS.
@@ -278,7 +278,7 @@ export default function Home() {
       {/* SECTION 10: COST & SUSTAINABILITY */}
       <div className="animated-text" style={{ backgroundColor: "#ffffff" }}>
         <section className="relative h-[100svh] w-full text-[#090909] z-10 reveal-container bg-white">
-          <div className="absolute overflow-hidden top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
+          <div className="absolute   top-18 bottom-auto md:top-auto left-5 right-5 md:left-10 md:right-10 w-auto md:w-1/2 md:bottom-9">
             <h3 className="text-xs md:text-base mb-3 md:mb-7 reveal-text font-bold text-[#090909]">EFFICIENCY</h3>
             <h2 className="text-2xl md:text-4xl 2xl:text-5xl reveal-text font-black leading-tight text-[#090909]">
               LEAN INFRASTRUCTURE.<br />INFINITE IMPACT.
@@ -308,7 +308,7 @@ export default function Home() {
 
       {/* SECTION 12: SOCIAL FOOTER LINKS */}
       <div className="animated-main">
-        <section className="text-xs md:text-base relative block md:flex justify-between items-center px-5 md:px-10 h-auto md:h-10 my-5 md:my-5 w-full z-10 gap-5 overflow-hidden reveal-container">
+        <section className="text-xs md:text-base relative block md:flex justify-between items-center px-5 md:px-10 h-auto md:h-10 my-5 md:my-5 w-full z-10 gap-5   reveal-container">
           <div className="flex gap-5 justify-center uppercase reveal-text font-bold">
             <a className="opacity-100 hover:opacity-50 duration-200" href="mailto:info@stitchmark.ai">INFO@STITCHMARK.AI</a>
             <a className="opacity-100 hover:opacity-50 duration-200" href="https://github.com/stitchmark" target="_blank" rel="noopener noreferrer">GITHUB</a>
@@ -323,11 +323,11 @@ export default function Home() {
       {/* SECTION 13: WHITE CONTACT SECTION */}
       <div className="animated-form contact-section">
         <footer className="relative w-full z-10 pointer-events-auto bg-white rounded-t-3xl md:rounded-t-[3rem] text-[#090909] pb-10">
-          <div className="h-full pb-5 pt-10 px-5 md:px-10 md:pb-10 md:pt-14 overflow-hidden reveal-container">
+          <div className="h-full pb-5 pt-10 px-5 md:px-10 md:pb-10 md:pt-14   reveal-container">
             
             <div className="block md:flex items-center gap-10">
               <div className="flex flex-col w-full md:w-1/2">
-                <div className="overflow-hidden mb-3 md:mb-7">
+                <div className="  mb-3 md:mb-7">
                   <h3 className="text-xs md:text-base font-bold tracking-widest uppercase reveal-text text-black">INTERESTED?</h3>
                 </div>
                 <div className="overflow-hidden">
@@ -342,12 +342,12 @@ export default function Home() {
             </div>
 
             <form className="block md:flex items-center justify-center gap-10 mt-10 md:mt-14" onSubmit={(e) => e.preventDefault()}>
-              <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 gap-4 md:gap-5 overflow-hidden">
+              <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 gap-4 md:gap-5  ">
                 <input type="text" placeholder="Full Name" required className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
                 <input type="email" placeholder="Email Address" required className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
                 <input type="text" placeholder="Organization" className="inputData px-3 md:px-5 h-12 md:h-14 reveal-text" />
               </div>
-              <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 pt-6 md:pt-0 gap-5 overflow-hidden">
+              <div className="flex flex-col text-xs md:text-base w-full md:w-1/2 pt-6 md:pt-0 gap-5  ">
                 <textarea placeholder="Message" required className="inputData px-3 py-3 md:px-5 md:py-4 h-24 md:h-32 border border-black/20 rounded-2xl outline-none focus:border-black transition-colors resize-none reveal-text"></textarea>
                 <div className="flex items-center uppercase justify-between mt-2 reveal-text">
                   <button 
