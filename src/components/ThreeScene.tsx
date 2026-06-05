@@ -62,7 +62,11 @@ function getCameraPathPosition(progress: number) {
   );
 }
 
-function SceneChoreography() {
+interface SceneRef {
+  globeOpacity: { current: number };
+}
+
+function SceneChoreography({ sceneRef }: { sceneRef: SceneRef }) {
   const scrollCurrent = useRef(0);
   const mouse = useRef({ x: 0, y: 0 });
   const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
@@ -82,6 +86,14 @@ function SceneChoreography() {
     
     // Read from the globally bridged scroll store
     scrollCurrent.current += (ScrollStore.progress - scrollCurrent.current) * lerpFactor;
+    
+    // Fade out globe after ~33% of scroll (when animation completes)
+    if (scrollCurrent.current > 0.33) {
+      const fadeProgress = (scrollCurrent.current - 0.33) / 0.15;
+      sceneRef.globeOpacity.current = Math.max(0, 1 - fadeProgress);
+    } else {
+      sceneRef.globeOpacity.current = 1;
+    }
     
     const camPos = getCameraPathPosition(scrollCurrent.current);
     
@@ -147,10 +159,11 @@ function OrbitalRing({
   );
 }
 
-function Planet() {
+function Planet({ opacityRef }: { opacityRef: { current: number } }) {
   const coreRef = useRef<THREE.Mesh>(null);
   const dotsRef = useRef<THREE.Points>(null);
   const ringGroupRef = useRef<THREE.Group>(null);
+  const groupRef = useRef<THREE.Group>(null);
   
   useFrame((state, delta) => {
     const safeDelta = Math.min(delta, 0.1);
@@ -164,6 +177,15 @@ function Planet() {
     if (ringGroupRef.current) {
       ringGroupRef.current.rotation.y -= 0.03 * safeDelta;
     }
+    if (groupRef.current) {
+      groupRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.material.opacity = opacityRef.current;
+        } else if (child instanceof THREE.Points) {
+          child.material.opacity = opacityRef.current;
+        }
+      });
+    }
   });
 
   // Create a SphereGeometry and use its vertices for the glowing dotted grid
@@ -173,17 +195,18 @@ function Planet() {
   }, []);
 
   return (
-    <group>
+    <group ref={groupRef}>
       {/* A. Core Planet (Opacity Blocker: Blocks objects, particles, and rings behind the sphere) */}
       <Sphere ref={coreRef} args={[1.28, 64, 64]}>
         <meshStandardMaterial
           color="#040404"
           roughness={0.95}
           metalness={0.9}
+          transparent={true}
         />
       </Sphere>
 
-      {/* B. Dotted grid globe wrapper (The premium glowing grid of Orbyte) */}
+      {/* B. Dotted grid globe wrapper (The premium glowing grid of StitchMark) */}
       <points ref={dotsRef} geometry={dottedGeometry}>
         <pointsMaterial
           color="#ffffff"
@@ -268,14 +291,16 @@ function Particles() {
 }
 
 export default function ThreeScene() {
+  const sceneRef = useRef<SceneRef>({ globeOpacity: { current: 1 } });
+
   return (
     <div className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none">
       <Canvas camera={{ position: [0, 0, 6], fov: 42 }}>
-        <SceneChoreography />
-        <ambientLight intensity={0.1} />
-        <directionalLight position={[5, 10, 5]} intensity={2.0} color="#ffffff" />
-        <directionalLight position={[-5, -10, -5]} intensity={0.3} color="#ffffff" />
-        <Planet />
+        <SceneChoreography sceneRef={sceneRef} />
+        <ambientLight intensity={0.15} />
+        <directionalLight position={[5, 10, 5]} intensity={2.2} color="#ffffff" />
+        <directionalLight position={[-5, -10, -5]} intensity={0.4} color="#ffffff" />
+        <Planet opacityRef={sceneRef.globeOpacity} />
         <Particles />
       </Canvas>
     </div>
