@@ -63,10 +63,10 @@ function getCameraPathPosition(progress: number) {
 }
 
 interface SceneRef {
-  globeOpacity: { current: number };
+  globeOpacity: number;
 }
 
-function SceneChoreography({ sceneRef }: { sceneRef: SceneRef }) {
+function SceneChoreography({ sceneRef }: { sceneRef: React.MutableRefObject<SceneRef> }) {
   const scrollCurrent = useRef(0);
   const mouse = useRef({ x: 0, y: 0 });
   const isMobile = typeof window !== "undefined" ? window.innerWidth <= 768 : false;
@@ -90,9 +90,9 @@ function SceneChoreography({ sceneRef }: { sceneRef: SceneRef }) {
     // Fade out globe after ~33% of scroll (when animation completes)
     if (scrollCurrent.current > 0.33) {
       const fadeProgress = (scrollCurrent.current - 0.33) / 0.15;
-      sceneRef.globeOpacity.current = Math.max(0, 1 - fadeProgress);
+      sceneRef.current.globeOpacity = Math.max(0, 1 - fadeProgress);
     } else {
-      sceneRef.globeOpacity.current = 1;
+      sceneRef.current.globeOpacity = 1;
     }
     
     const camPos = getCameraPathPosition(scrollCurrent.current);
@@ -159,7 +159,7 @@ function OrbitalRing({
   );
 }
 
-function Planet({ opacityRef }: { opacityRef: { current: number } }) {
+function Planet({ opacityRef }: { opacityRef: React.MutableRefObject<SceneRef> }) {
   const coreRef = useRef<THREE.Mesh>(null);
   const dotsRef = useRef<THREE.Points>(null);
   const ringGroupRef = useRef<THREE.Group>(null);
@@ -180,9 +180,9 @@ function Planet({ opacityRef }: { opacityRef: { current: number } }) {
     if (groupRef.current) {
       groupRef.current.traverse((child) => {
         if (child instanceof THREE.Mesh) {
-          child.material.opacity = opacityRef.current;
+          child.material.opacity = opacityRef.current.globeOpacity;
         } else if (child instanceof THREE.Points) {
-          child.material.opacity = opacityRef.current;
+          child.material.opacity = opacityRef.current.globeOpacity;
         }
       });
     }
@@ -291,7 +291,7 @@ function Particles() {
 }
 
 export default function ThreeScene() {
-  const sceneRef = useRef<SceneRef>({ globeOpacity: { current: 1 } });
+  const sceneRef = useRef<SceneRef>({ globeOpacity: 1 });
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen z-0 pointer-events-none">
@@ -300,7 +300,7 @@ export default function ThreeScene() {
         <ambientLight intensity={0.15} />
         <directionalLight position={[5, 10, 5]} intensity={2.2} color="#ffffff" />
         <directionalLight position={[-5, -10, -5]} intensity={0.4} color="#ffffff" />
-        <Planet opacityRef={sceneRef.globeOpacity} />
+        <Planet opacityRef={sceneRef} />
         <Particles />
       </Canvas>
     </div>

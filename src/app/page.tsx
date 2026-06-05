@@ -376,6 +376,11 @@ export default function Home() {
               </div>
             </form>
 
+            <div className="mt-8 md:mt-12 pt-8 border-t border-black/10 text-center">
+              <p className="text-xs md:text-sm text-black/70 mb-2">Have questions? Reach out directly:</p>
+              <a href="mailto:sam@stitchmark.space" className="text-sm md:text-base font-semibold text-black hover:opacity-60 transition-opacity">sam@stitchmark.space</a>
+            </div>
+
           </div>
         </footer>
       </div>
