@@ -83,8 +83,9 @@ body {
 .animated-text {
   position: relative;
   width: 100%;
-  height: 100svh;
-  overflow: hidden;
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
   display: flex;
   flex-direction: column;
 }
