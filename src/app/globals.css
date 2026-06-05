@@ -22,6 +22,11 @@
   box-sizing: border-box;
 }
 
+/* BASE TYPOGRAPHY FIXES – larger base, better spacing */
+html {
+  font-size: 18px; /* was 16px, now larger for readability */
+}
+
 body {
   background: var(--background);
   background-color: #060606;
@@ -30,6 +35,61 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5; /* global improvement for all text */
+}
+
+/* Headings – bigger, tighter spacing */
+h1, h2, h3, h4 {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+/* Paragraphs and text content – wider, more breathing */
+p, .text-content, li {
+  font-family: "itc-avant-garde-gothic-pro", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  max-width: 70ch;      /* comfortable reading width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FIX GAPS IN SECTIONS – replace fixed height with min-height, remove overflow hidden */
+.animated-main,
+.animated-step,
+.animated-text {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;   /* was height: 100svh – now stretches with content */
+  height: auto;
+  overflow: visible;     /* remove hidden to prevent clipping gaps */
+  display: block;
+}
+
+/* Ensure any overflow-hidden helper doesn't create gaps */
+.overflow-hidden {
+  overflow: visible !important;
 }
 
 /* Custom Cursor */
@@ -72,57 +132,10 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Layout section containers matching orbyte.studio scroll structure */
+/* Layout section containers */
 .scroll-container {
   position: relative;
   width: 100%;
-}
-
-.animated-main,
-.animated-step,
-.animated-text {
-  position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 100svh;
-  overflow: visible;
-  display: flex;
-  flex-direction: column;
-}
-
-.animated-main {
-  justify-content: center;
-}
-
-/* Fluid display text layout tracking and weights */
-h1 {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 800; /* ITC Avant Garde Pro Bold/Demi */
-  letter-spacing: -0.04em;
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-
-h2 {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-h3 {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-p {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-  line-height: 1.6;
 }
 
 /* Custom helpers for responsiveness */
@@ -132,7 +145,7 @@ p {
   }
 }
 
-/* Input elements for contact form */
+/* Input elements for contact form – larger, more padding */
 .inputData {
   background: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -141,13 +154,20 @@ p {
   font-weight: 500;
   color: #000000;
   transition: border-bottom-color 0.3s;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
 }
 
 .inputData:focus {
   border-bottom-color: #000000;
 }
 
-/* Orbyte EXACT radial button CSS ported from minified */
+/* Contact form spacing */
+.contact-section form {
+  gap: 1.5rem;
+}
+
+/* Orbyte EXACT radial button CSS */
 .radial-button {
   border: 1px solid var(--border-color);
   cursor: pointer;
@@ -226,10 +246,11 @@ p {
   justify-content: center;
 }
 
+/* Editorial footer text – wider, better line‑height */
 .footerText {
-  font-size: clamp(1.5rem, 5vw, 4rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  line-height: 1.2;
   font-weight: 800;
-  max-width: 80%;
+  max-width: 90%;
   margin: 0 auto;
 }
