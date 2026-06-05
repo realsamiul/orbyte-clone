@@ -2,7 +2,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium radial vignetted background gradient creating deep celestial lighting */
   --background: radial-gradient(circle at center, #111111 0%, #060606 100%);
   --foreground: #ffffff;
   --border-color: #ffffff;
@@ -13,18 +12,14 @@
   --hover-border-color: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* BASE TYPOGRAPHY FIXES – larger base, better spacing */
+/* Base font larger */
 html {
-  font-size: 18px; /* was 16px, now larger for readability */
+  font-size: 18px;
+}
+@media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }
 
 body {
@@ -33,66 +28,54 @@ body {
   color: var(--foreground);
   font-family: "itc-avant-garde-gothic-pro", itc-avant-garde-gothic-pro, ui-sans-serif, system-ui, sans-serif;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5; /* global improvement for all text */
+  line-height: 1.5;
 }
 
-/* Headings – bigger, tighter spacing */
+/* Bigger, better headings */
 h1, h2, h3, h4 {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
-
 h1 {
   font-size: clamp(2.5rem, 8vw, 5rem);
   text-transform: uppercase;
 }
-
 h2 {
   font-size: clamp(2rem, 5vw, 3.5rem);
   text-transform: uppercase;
 }
-
 h3 {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
   font-size: 1rem;
+  letter-spacing: 0.15em;
+  font-weight: 500;
 }
-
-/* Paragraphs and text content – wider, more breathing */
-p, .text-content, li {
-  font-family: "itc-avant-garde-gothic-pro", sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+p, li, .text-content {
+  font-size: 1.05rem;
   line-height: 1.6;
-  max-width: 70ch;      /* comfortable reading width */
+  max-width: 70ch;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* FIX GAPS IN SECTIONS – replace fixed height with min-height, remove overflow hidden */
+/* FIX GAPS – sections stretch with content, no hidden overflow */
 .animated-main,
 .animated-step,
 .animated-text {
   position: relative;
   width: 100%;
-  min-height: 100svh;   /* was height: 100svh – now stretches with content */
+  min-height: 100svh;    /* was height: 100svh – now expands with content */
   height: auto;
-  overflow: visible;     /* remove hidden to prevent clipping gaps */
+  overflow: visible;      /* was hidden – remove hidden to prevent gaps */
   display: block;
 }
 
-/* Ensure any overflow-hidden helper doesn't create gaps */
+/* Remove any forced overflow hidden from children */
 .overflow-hidden {
   overflow: visible !important;
 }
 
-/* Custom Cursor */
+/* Custom Cursor (unchanged) */
 .custom-cursor {
   width: 8px;
   height: 8px;
@@ -105,7 +88,6 @@ p, .text-content, li {
   mix-blend-mode: difference;
   transition: width 0.2s, height 0.2s, background-color 0.2s;
 }
-
 .custom-cursor-ring {
   width: 40px;
   height: 40px;
@@ -117,14 +99,11 @@ p, .text-content, li {
   z-index: 99998;
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
 }
-
-/* Custom Cursor Active / Hover states */
 .cursor-hover .custom-cursor {
   width: 14px;
   height: 14px;
   background-color: #ffffff;
 }
-
 .cursor-hover .custom-cursor-ring {
   width: 60px;
   height: 60px;
@@ -132,20 +111,20 @@ p, .text-content, li {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Layout section containers */
+/* Scroll container */
 .scroll-container {
   position: relative;
   width: 100%;
 }
 
-/* Custom helpers for responsiveness */
+/* Hide helper for short screens */
 @media (max-height: 40rem) {
   .hide-when-short {
     display: none !important;
   }
 }
 
-/* Input elements for contact form – larger, more padding */
+/* Form inputs – larger, more padding */
 .inputData {
   background: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -157,17 +136,14 @@ p, .text-content, li {
   font-size: 1rem;
   padding: 0.75rem 1rem;
 }
-
 .inputData:focus {
   border-bottom-color: #000000;
 }
-
-/* Contact form spacing */
 .contact-section form {
   gap: 1.5rem;
 }
 
-/* Orbyte EXACT radial button CSS */
+/* Radial buttons (unchanged) */
 .radial-button {
   border: 1px solid var(--border-color);
   cursor: pointer;
@@ -188,7 +164,6 @@ p, .text-content, li {
   letter-spacing: 0.05em;
   font-size: 0.85rem;
 }
-
 .radial-button:before {
   content: "";
   top: var(--y, 50%);
@@ -202,20 +177,16 @@ p, .text-content, li {
   position: absolute;
   transform: translate(-50%, -50%);
 }
-
 .radial-button:hover:before {
   width: 300px;
   height: 300px;
 }
-
 .radial-button:hover {
   border-color: var(--hover-border-color);
 }
-
 .radial-button:hover span {
   color: var(--hover-text-color);
 }
-
 .radial-button span {
   z-index: 1;
   justify-content: center;
@@ -226,19 +197,15 @@ p, .text-content, li {
   display: flex;
   position: relative;
 }
-
 @media (max-width: 48rem) {
   .radial-button {
     height: 42px;
     font-size: 0.75rem;
   }
 }
-
-/* Circle Rounded Button wrapper */
 .arrowRounded {
   pointer-events: auto;
 }
-
 .arrowRounded button {
   padding: 0;
   display: flex;
@@ -246,7 +213,7 @@ p, .text-content, li {
   justify-content: center;
 }
 
-/* Editorial footer text – wider, better line‑height */
+/* Footer text – wider, larger */
 .footerText {
   font-size: clamp(1.5rem, 5vw, 3rem);
   line-height: 1.2;
